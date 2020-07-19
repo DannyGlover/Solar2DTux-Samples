@@ -54,7 +54,7 @@ function M:newUI( options )
 
 	-- Check system for font selection
 	local useFont
-	if ( "android" == system.getInfo( "platform" ) or "win32" == system.getInfo( "platform" ) ) then
+	if ( "android" == system.getInfo( "platform" ) or "win32" == system.getInfo( "platform" ) or "linux" == system.getInfo( "platform") ) then
 		useFont = native.systemFont
 	else
 		useFont = "HelveticaNeue-Light"
