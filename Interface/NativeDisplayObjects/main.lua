@@ -274,7 +274,7 @@ for i = 1,#menuButtons do
 	button.y = 165 + ((rowNum-1)*50)
 	buttonGroup:insert( button )
 	
-	if ( menuButtons[i] == "Map View" and ( system.getInfo("environment") == "simulator" or system.getInfo("platform") == "macos" or system.getInfo("platform") == "win32" ) ) then
+	if ( menuButtons[i] == "Map View" and ( system.getInfo("environment") == "simulator" or system.getInfo("platform") == "macos" or system.getInfo("platform") == "win32"  or system.getInfo("platform") == "linux" ) ) then
 		button:setEnabled( false )
 		button.alpha = 0.3
 	end
