@@ -26,7 +26,11 @@ display.getCurrentStage():insert( sampleUI.frontGroup )
 -- Require libraries/plugins
 local widget = require( "widget" )
 widget.setTheme( "widget_theme_android_holo_light" )
-local licensing = require( "licensing" )
+local licensing = nil
+
+if ( system.getInfo("platform") == "android" ) then
+	licensing = require( "licensing" )
+end
 
 -- Set local variables
 local setupComplete = false
