@@ -5,7 +5,7 @@ local lib = Library:new{ name='plugin.facebook.v4', publisherId='com.coronalabs'
 
 -- Default implementations
 local function defaultFunction()
-	print( "WARNING: The '" .. lib.name .. "' library is not available in the Corona Simulator." )
+	print( "WARNING: The '" .. lib.name .. "' library is not available in the Solar2D Simulator." )
 end
 
 local function defaultFunctionReturnNil()
@@ -23,6 +23,7 @@ local function defaultFunctionReturnTrue()
 	return true
 end
 
+lib.init = defaultFunction
 lib.login = defaultFunction
 lib.logout = defaultFunction
 lib.request = defaultFunction

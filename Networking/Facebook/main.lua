@@ -26,7 +26,16 @@ display.getCurrentStage():insert( sampleUI.frontGroup )
 -- Require libraries/plugins
 local json = require( "json" )
 local widget = require( "widget" )
-local facebook = require( "plugin.facebook.v4a" )
+local facebook = nil
+
+print("env: ", system.getInfo("environment"))
+print("platform name: ", system.getInfo("platform"))
+
+if (system.getInfo("environment") == "simulator") then
+	facebook = require( "facebook_stub" )
+else
+	facebook = require( "plugin.facebook.v4a" )
+end
 
 -- Set app font
 local appFont = sampleUI.appFont
