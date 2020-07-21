@@ -18,7 +18,13 @@
 ---------------------------------------------------------------------------------------
 
 local launchArgs = ...
-local notifications = require( "plugin.notifications" )
+local notifications = nil
+
+if (system.getInfo("environment") == "simulator") then
+	notifications = require( "notifications_stub" )
+else
+	notifications = require( "plugin.notifications" )
+end
 local widget = require( "widget" )
 
 local centerX = display.contentCenterX
