@@ -46,7 +46,9 @@ local centerY = display.contentCenterY		-- find center of screen
 local _W = display.contentWidth
 local _H = display.contentHeight
 
-io.output():setvbuf('no') 		-- **debug: disable output buffering for Xcode Console
+if (system.getInfo("platform") == "macos") then
+	io.output():setvbuf('no') 		-- **debug: disable output buffering for Xcode Console
+end
 
 display.setDefault( "background", 80/255 )
 
@@ -145,6 +147,7 @@ function isExitFile()
 --	print( filePath )
 	
 	if file then
+		previousEvent = file:read("*a")
 		io.close( file )
 		os.remove( filePath )	-- delete the file
 		results = true
@@ -155,11 +158,12 @@ end
 
 -- Create the ExitFile
 --
-function createExitFile()
+function createExitFile(prevEvent)
     -- create the ExitState file
---  print( "Creating file..." )
-    file = io.open( filePath, "w" )
-    print( "file status ", file, filePath)	-- **debug
+	--print( "Creating file..." )
+	file = io.open( filePath, "w" )
+	file:write(prevEvent)
+	--print( "file status ", file, filePath)	-- **debug
 	io.close( file )
 end
 
@@ -175,13 +179,13 @@ end
 -----------------------------------------------------------------------
 --
 function onSystemEvent( event ) 
-	print (event.name .. ", " .. event.type)
+	print ("event name", event.name, "event type: ", event.type)
 	print ("Previous event type: " .. tostring(previousEvent))
 	print()
 
-	if  "applicationExit" == event.type then
+	if "applicationExit" == event.type then
 		-- Create the unique file before exiting
-		createExitFile()
+		createExitFile(event.type)
 	elseif "applicationOpen" == event.type and event.url ~= "" then
 		native.showAlert( "Open via custom url", event.url, { "OK" } )
 	else
@@ -203,8 +207,6 @@ function onSystemEvent( event )
 	end
 	
 	pEventLabel.text = "(Previous: " .. tostring(previousEvent) .. ")"
-		
-
 
 	-- Display the system message on the screen
 	if not eventLabel then
@@ -212,9 +214,8 @@ function onSystemEvent( event )
 		eventLabel:setFillColor( 1, 1, 0 )
 	end
 
-	eventLabel.text = event.type
-	
-	previousEvent = event.type		-- save the state for next time
+	eventLabel.text = event.type	
+	previousEvent = event.type	-- save the state for next time
 	
 	return true
 	
@@ -254,7 +255,7 @@ function changeOrientation( mode )
 		OEventLabel:setFillColor( 1, 1, 0 )
 	end
 	 
-	OEventLabel.text = mode
+	OEventLabel.text = "Orientation: " .. mode
 	
 	-- Display the Width and Height of the screen
 	if not WHLabel then
