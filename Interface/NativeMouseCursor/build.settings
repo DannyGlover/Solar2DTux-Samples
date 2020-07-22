@@ -27,7 +27,7 @@ settings =
 	{
 		titleText =
 		{
-			default = "Hello World",
+			default = "Native Mouse Cursor",
 		},
 	},
 }
