@@ -20,11 +20,10 @@ widget.setTheme("widget_theme_android_holo_dark")
 local isRunningOnDesktop = false
 if (system.getInfo("environment") == "device") then
 	local platform = system.getInfo("platform")
-	if (platform == "win32") or (platform == "macos") then
+	if (platform == "win32") or (platform == "macos") or (platform == "linux") then
 		isRunningOnDesktop = true
 	end
 end
-
 
 -- Set up the screen to support 5 buttons.
 local buttonCount = 5
@@ -168,7 +167,7 @@ if (false == isRunningOnDesktop) then
 	local message =
 			"This app's desktop features are not supported on mobile devices or in the Corona Simulator.\n" ..
 			"\n" ..
-			"Please build this app for macOS or Win32 to test it."
+			"Please build this app for macOS, Linux or Win32 to test it."
 	display.newText(
 			message, display.contentCenterX, display.contentCenterY, display.contentWidth * 0.8, 0,
 			native.systemFont, 16)
