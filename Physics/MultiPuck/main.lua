@@ -30,7 +30,7 @@ physics.start()
 physics.setGravity( 0, 0 ) -- no gravity in any direction
 
 popSound = audio.loadSound ("pop2_wav.wav")
-labelFont = gameUI.newFontXP{ ios="Zapfino", android=native.systemFont }
+labelFont = gameUI.newFontXP()
 
 system.activate( "multitouch" )
 

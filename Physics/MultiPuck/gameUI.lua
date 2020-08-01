@@ -105,16 +105,15 @@ end
 
 -- A function for cross-platform fonts
 
-function newFontXP( params )
-	local isAndroid = "Android" == system.getInfo("platformName")
+function newFontXP()
 
-	if isAndroid and params.android then
-		font = params.android -- return font for Android
-	elseif params.ios then
-		font = params.ios -- return font for iOS/MacOS
+	local useFont
+	if ( "android" == system.getInfo( "platform" ) or "win32" == system.getInfo( "platform" ) or "linux" == system.getInfo( "platform") ) then
+		useFont = native.systemFont
 	else
-		font = native.systemFont -- default font (Helvetica on iOS, Android Sans on Android)
+		useFont = "Zapfino"
 	end
-	
-	return font
+
+	return useFont
+
 end

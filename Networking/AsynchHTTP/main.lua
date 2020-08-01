@@ -32,6 +32,15 @@
 
 display.setStatusBar( display.HiddenStatusBar )
 
+-- Choose correct font file
+
+local selectedFont
+if ( "android" == system.getInfo( "platform" ) or "win32" == system.getInfo( "platform" ) or "linux" == system.getInfo( "platform") ) then
+	selectedFont = native.systemFont
+else
+	selectedFont = "Courier New"
+end
+
 local json = require("json")
 
 -- Access Google over SSL:
@@ -41,7 +50,7 @@ local myTitle = display.newText("AsyncHTTP", display.contentCenterX, 15, native.
 local myText = display.newText("(Waiting for response)", display.contentCenterX, 45, native.systemFont, 14)
 
 local myInfoBackground = display.newRect( display.contentCenterX, display.contentCenterY + 30, display.contentWidth - 20, display.contentHeight - 80 )
-local myInfo = display.newText("", myInfoBackground.x, myInfoBackground.y, myInfoBackground.width - 10, myInfoBackground.height - 10, "Courier New", 8)
+local myInfo = display.newText("", myInfoBackground.x, myInfoBackground.y, myInfoBackground.width - 10, myInfoBackground.height - 10, selectedFont, 8)
 myInfo:setFillColor( 0, 0, 0 )
 
 local function networkListener( event )
@@ -78,9 +87,10 @@ local function onResize( event )
 	myInfoBackground.height = display.contentHeight - 80
 
 	-- Update response field. This does not update cleanly, and needs to be recreated.
+	
 	local myInfoText = myInfo.text
 	myInfo:removeSelf()
-	myInfo = display.newText(myInfoText, myInfoBackground.x, myInfoBackground.y, myInfoBackground.width - 10, myInfoBackground.height - 10, "Courier New", 8)
+	myInfo = display.newText(myInfoText, myInfoBackground.x, myInfoBackground.y, myInfoBackground.width - 10, myInfoBackground.height - 10, selectedFont,  8)
 	myInfo:setFillColor( 0, 0, 0 )
 end
 Runtime:addEventListener( "resize", onResize )
